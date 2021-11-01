@@ -18,8 +18,10 @@ app.post('/formsubmissions', (req, res, next) => {
 })
 
 app.get("/form-submissions", (req, res, next) => {
-    fs.readFile('form-submissions.json', (err) => {
+    fs.readFile('form-submissions.json', (err, data) => {
         if (err) throw err;
+        let submissions = JSON.parse(data)
+        res.send(submissions)
     });
     next();
 })
@@ -29,7 +31,7 @@ app.use('/', (req, res, next) => {
     next();
 })
 
-app.use(express.static(path.join(__dirname, '../public')))
+app.use(express.static('/public'))
 
 app.use(router)
 
